@@ -368,7 +368,35 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                 true -> SelectionPredicates.createSelectAnything()
                 false -> SelectionPredicates.createSelectSingleAnything()
             }
-        ).build().also {
+        ).withOnDragInitiatedListener { e ->
+            val view = recyclerView.findChildViewUnder(e.x, e.y)
+            if (view != null) {
+                val viewHolder = recyclerView.getChildViewHolder(view)
+                val media = AlbumViewModel.AlbumContent.MediaItem::class.safeCast(
+                    thumbnailAdapter.currentList.getOrNull(viewHolder.bindingAdapterPosition)
+                )?.media
+                
+                if (media != null) {
+                    val selectedMedias = selectionTracker?.selection?.toList() ?: emptyList()
+                    val urisToDrag = if (selectedMedias.contains(media)) {
+                        selectedMedias.map { it.uri }
+                    } else {
+                        listOf(media.uri)
+                    }
+
+                    val clipData = ClipData.newUri(requireContext().contentResolver, "media", urisToDrag.first()).apply {
+                        urisToDrag.drop(1).forEach { uri ->
+                            addItem(ClipData.Item(uri))
+                        }
+                    }
+
+                    val flags = View.DRAG_FLAG_GLOBAL or View.DRAG_FLAG_GLOBAL_URI_READ
+                    view.startDragAndDrop(clipData, View.DragShadowBuilder(view), null, flags)
+                    return@withOnDragInitiatedListener true
+                }
+            }
+            false
+        }.build().also {
             thumbnailAdapter.selectionTracker = it
             it.addObserver(selectionTrackerObserver)
         }
