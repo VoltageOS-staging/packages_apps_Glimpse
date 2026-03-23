@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.ui.recyclerview
 
+import android.content.ClipData
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -175,6 +176,12 @@ class MediaViewerAdapter(
             this.media = media
 
             imageView.load(media.uri)
+
+            imageView.setOnLongClickListener { view ->
+                val clipData = ClipData.newUri(view.context.contentResolver, "media", media.uri)
+                val flags = View.DRAG_FLAG_GLOBAL or View.DRAG_FLAG_GLOBAL_URI_READ
+                view.startDragAndDrop(clipData, View.DragShadowBuilder(view), null, flags)
+            }
         }
 
         fun onViewAttachedToWindow() {
