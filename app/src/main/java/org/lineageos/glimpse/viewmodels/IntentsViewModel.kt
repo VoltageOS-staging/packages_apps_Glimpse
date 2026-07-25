@@ -329,7 +329,9 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
     private fun extractUriMetadata(uri: Uri, mediaType: MediaType): UriMetadata? {
         val contentResolver = applicationContext.contentResolver
 
-        val mimeType = contentResolver.getType(uri) ?: run {
+        val mimeType = runCatching {
+            contentResolver.getType(uri)
+        }.getOrNull() ?: run {
             Log.e(LOG_TAG, "Cannot get media type of $uri")
             return null
         }
@@ -337,25 +339,29 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
         var displayName: String? = null
         var sizeBytes = 0L
 
-        contentResolver.query(
-            uri,
-            arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
-            null,
-            null,
-            null
-        )?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val displayNameColumn = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                val sizeColumn = cursor.getColumnIndex(OpenableColumns.SIZE)
+        runCatching {
+            contentResolver.query(
+                uri,
+                arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+                null,
+                null,
+                null
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val displayNameColumn = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    val sizeColumn = cursor.getColumnIndex(OpenableColumns.SIZE)
 
-                if (displayNameColumn != -1 && !cursor.isNull(displayNameColumn)) {
-                    displayName = cursor.getString(displayNameColumn)
-                }
+                    if (displayNameColumn != -1 && !cursor.isNull(displayNameColumn)) {
+                        displayName = cursor.getString(displayNameColumn)
+                    }
 
-                if (sizeColumn != -1 && !cursor.isNull(sizeColumn)) {
-                    sizeBytes = cursor.getLong(sizeColumn)
+                    if (sizeColumn != -1 && !cursor.isNull(sizeColumn)) {
+                        sizeBytes = cursor.getLong(sizeColumn)
+                    }
                 }
             }
+        }.onFailure {
+            Log.w(LOG_TAG, "Cannot query metadata for uri $uri", it)
         }
 
         if (sizeBytes <= 0L) {
@@ -432,7 +438,9 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
             )
 
             when (uri.scheme) {
-                "content", "file" -> applicationContext.contentResolver.getType(uri)?.let { type ->
+                "content", "file" -> runCatching {
+                    applicationContext.contentResolver.getType(uri)
+                }.getOrNull()?.let { type ->
                     MimeUtils.mimeTypeToMediaType(type)
                 }
 
