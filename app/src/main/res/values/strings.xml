@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-FileCopyrightText: 2026 The VoltageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -88,6 +89,32 @@
     <string name="intent_media_type_not_supported">Media type not supported</string>
     <string name="intent_no_system_wallpaper_cropper_available">No system cropper available</string>
     <string name="intent_wallpaper_cannot_be_changed">Wallpaper can\'t be changed</string>
+
+    <!-- Editor -->
+    <string name="editor_crop">Crop</string>
+    <string name="editor_default_font">Default</string>
+    <string name="editor_discard_dialog_message">Your edits will be lost.</string>
+    <string name="editor_discard_dialog_title">Discard edits?</string>
+    <string name="editor_eraser">Eraser</string>
+    <string name="editor_eraser_size_decrease">Decrease eraser size</string>
+    <string name="editor_eraser_size_increase">Increase eraser size</string>
+    <string name="editor_flip">Flip</string>
+    <string name="editor_font">Font</string>
+    <string name="editor_highlighter">Highlighter</string>
+    <string name="editor_move">Move</string>
+    <string name="editor_pen">Pen</string>
+    <string name="editor_redo">Redo</string>
+    <string name="editor_reset">Reset</string>
+    <string name="editor_rotate">Rotate</string>
+    <string name="editor_save">Save</string>
+    <string name="editor_save_copy">Save copy</string>
+    <string name="editor_save_failed">Couldn\'t save the edited image</string>
+    <string name="editor_text">Text</string>
+    <string name="editor_text_done">Done</string>
+    <string name="editor_text_rotate">Rotate text</string>
+    <string name="editor_text_size_decrease">Decrease text size</string>
+    <string name="editor_text_size_increase">Increase text size</string>
+    <string name="editor_undo">Undo</string>
 
     <!-- File actions -->
     <string name="file_action_add_to_favorites">Add to favorites</string>

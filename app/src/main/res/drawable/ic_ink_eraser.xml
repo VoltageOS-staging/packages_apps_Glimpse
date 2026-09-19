@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The VoltageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:tint="#000000"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M15.14,3c0.39,0 0.78,0.15 1.06,0.44l4.36,4.36c0.59,0.59 0.59,1.53 0,2.12l-9.9,9.9l-5.66,0l0,-5.66l9.9,-9.9C14.36,3.15 14.75,3 15.14,3zM7,21h14v-2H7V21z" />
+</vector>

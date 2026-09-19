@@ -18,6 +18,8 @@ import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.github.panpf.zoomimage.GlideZoomImageView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -175,7 +177,13 @@ class MediaViewerAdapter(
         fun bind(media: Media) {
             this.media = media
 
-            imageView.load(media.uri)
+            // Version the load so an in-place edit can't serve stale cache
+            imageView.load(
+                media.uri,
+                RequestOptions().signature(
+                    ObjectKey("${media.dateModified.time}-${media.sizeBytes}")
+                )
+            )
 
             imageView.setOnLongClickListener { view ->
                 val clipData = ClipData.newUri(view.context.contentResolver, "media", media.uri)

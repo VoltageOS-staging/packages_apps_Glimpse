@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-FileCopyrightText: 2026 The VoltageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
@@ -44,6 +45,19 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="rippleColor">?attr/colorControlHighlight</item>
+    </style>
+
+    <!-- Editor -->
+    <style name="Theme.Glimpse.Editor" parent="Theme.Glimpse.MediaViewer" />
+
+    <style name="Theme.Glimpse.Editor.ToolButton" parent="Theme.Glimpse.MediaViewer.BottomSheet.Button">
+        <item name="android:alpha">0.7</item>
+    </style>
+
+    <style name="Theme.Glimpse.Editor.TextOption" parent="Widget.Material3.Button.TextButton">
+        <item name="android:minWidth">48dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="iconTint">@android:color/white</item>
     </style>
 
     <!-- Media info bottom sheet dialog -->

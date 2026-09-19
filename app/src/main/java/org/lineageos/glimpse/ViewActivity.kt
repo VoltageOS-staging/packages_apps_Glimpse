@@ -1,5 +1,6 @@
 /*
  * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-FileCopyrightText: 2026 The VoltageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -33,6 +34,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -161,6 +164,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             // Do nothing
         }
 
+    private val editorContract =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                refreshAfterEdit()
+            }
+        }
+
     private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
@@ -266,14 +276,22 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         adjustButton.setOnClickListener {
-            viewModel.displayedMedia.value?.let {
+            viewModel.displayedMedia.value?.let { media ->
                 dismissKeyguardAndRun {
-                    startActivity(
-                        Intent.createChooser(
-                            buildEditIntent(it),
-                            null
+                    if (media.mediaType == MediaType.IMAGE) {
+                        editorContract.launch(
+                            EditorActivity.createIntent(
+                                this, media.uri, media.mimeType
+                            )
                         )
-                    )
+                    } else {
+                        startActivity(
+                            Intent.createChooser(
+                                buildEditIntent(media),
+                                null
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -577,6 +595,19 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             appBarLayout.measuredHeight,
             bottomSheetLinearLayout.measuredHeight,
         )
+    }
+
+    /**
+     * Drop cached pixels after an edit so the viewer can't serve the
+     * pre-edit bitmap for the same URI, then reload the current page.
+     * The MediaStore observer picks up the metadata change from there.
+     */
+    private fun refreshAfterEdit() {
+        Glide.get(this).clearMemory()
+        lifecycleScope.launch(Dispatchers.IO) {
+            Glide.get(this@ViewActivity).clearDiskCache()
+        }
+        mediaViewerAdapter.notifyItemChanged(viewPager.currentItem)
     }
 
     private fun dismissKeyguardAndRun(runnable: () -> Unit) {

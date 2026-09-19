@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-FileCopyrightText: 2026 The VoltageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -8,5 +9,31 @@
         <item>@string/set_wallpaper_home_screen</item>
         <item>@string/set_wallpaper_lock_screen</item>
         <item>@string/set_wallpaper_both</item>
+    </string-array>
+
+    <array name="markup_colors" translatable="false">
+        <item>#FFFFFF</item>
+        <item>#000000</item>
+        <item>#F44336</item>
+        <item>#FF9800</item>
+        <item>#FFEB3B</item>
+        <item>#4CAF50</item>
+        <item>#2196F3</item>
+        <item>#9C27B0</item>
+    </array>
+
+    <string-array name="editor_text_fonts" translatable="false">
+        <item>google-sans</item>
+        <item>manrope</item>
+        <item>inter</item>
+        <item>dosis</item>
+        <item>linotte</item>
+        <item>harmonyos-sans</item>
+        <item>op-sans</item>
+        <item>recursive</item>
+        <item>fluid-sans</item>
+        <item>opposans</item>
+        <item>sanfrancisco</item>
+        <item>fucek</item>
     </string-array>
 </resources>

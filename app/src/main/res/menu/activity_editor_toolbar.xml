@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The VoltageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/undo"
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:contentDescription="@string/editor_undo"
+        android:icon="@drawable/ic_undo"
+        android:title="@string/editor_undo"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/redo"
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:contentDescription="@string/editor_redo"
+        android:icon="@drawable/ic_redo"
+        android:title="@string/editor_redo"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/save"
+        android:title="@string/editor_save"
+        app:actionLayout="@layout/editor_save_action"
+        app:showAsAction="always" />
+
+</menu>

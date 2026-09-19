@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The VoltageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".EditorActivity">
+
+    <FrameLayout
+        android:id="@+id/canvasContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <org.lineageos.glimpse.ui.editor.MarkupView
+            android:id="@+id/markupView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <org.lineageos.glimpse.ui.editor.CropOverlayView
+            android:id="@+id/cropOverlayView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_media_viewer_top_sheet"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/activity_editor_toolbar"
+            app:navigationIcon="@drawable/ic_close"
+            app:navigationIconTint="@android:color/white"
+            app:title="@string/file_action_edit"
+            app:titleTextAppearance="?attr/textAppearanceTitleSmall"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheetLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_media_viewer_bottom_sheet"
+        android:gravity="top|center"
+        android:orientation="vertical">
+
+        <org.lineageos.glimpse.ui.editor.ColorPaletteView
+            android:id="@+id/colorPaletteView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/textOptionsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/textDecreaseButton"
+                style="@style/Theme.Glimpse.Editor.TextOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/editor_text_size_decrease"
+                android:text="A−" />
+
+            <TextView
+                android:id="@+id/textSizeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minWidth="48dp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="@android:color/white"
+                tools:text="100%" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/textIncreaseButton"
+                style="@style/Theme.Glimpse.Editor.TextOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/editor_text_size_increase"
+                android:text="A+" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/textRotateButton"
+                style="@style/Theme.Glimpse.Editor.TextOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/editor_text_rotate"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:text=""
+                app:icon="@drawable/ic_rotate_left"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fontButton"
+                style="@style/Theme.Glimpse.Editor.TextOption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/editor_font"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="@string/editor_default_font" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cropActionsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rotateButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_rotate"
+                android:drawableTop="@drawable/ic_rotate_left"
+                android:text="@string/editor_rotate" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/flipButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_flip"
+                android:drawableTop="@drawable/ic_flip"
+                android:text="@string/editor_flip" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/resetButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_reset"
+                android:drawableTop="@drawable/ic_back"
+                android:text="@string/editor_reset" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/textInputLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <EditText
+                android:id="@+id/textInputEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/editor_text"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLines="4"
+                android:textColor="@android:color/white"
+                android:textColorHint="#B3FFFFFF"
+                android:textSize="18sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/textDoneButton"
+                style="@style/Theme.Glimpse.Editor.TextOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/editor_text_done"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:text=""
+                app:icon="@drawable/ic_done"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/eraserOptionsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/eraserDecreaseButton"
+                style="@style/Theme.Glimpse.Editor.TextOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/editor_eraser_size_decrease"
+                android:text="−" />
+
+            <TextView
+                android:id="@+id/eraserSizeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minWidth="48dp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="@android:color/white"
+                tools:text="100%" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/eraserIncreaseButton"
+                style="@style/Theme.Glimpse.Editor.TextOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/editor_eraser_size_increase"
+                android:text="+" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/toolsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/penButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_pen"
+                android:drawableTop="@drawable/ic_draw"
+                android:text="@string/editor_pen" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/highlighterButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_highlighter"
+                android:drawableTop="@drawable/ic_highlight"
+                android:text="@string/editor_highlighter" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/eraserButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_eraser"
+                android:drawableTop="@drawable/ic_ink_eraser"
+                android:text="@string/editor_eraser" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/textButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_text"
+                android:drawableTop="@drawable/ic_text_fields"
+                android:text="@string/editor_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/moveButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_move"
+                android:drawableTop="@drawable/ic_move"
+                android:text="@string/editor_move" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cropButton"
+                style="@style/Theme.Glimpse.Editor.ToolButton"
+                android:contentDescription="@string/editor_crop"
+                android:drawableTop="@drawable/ic_crop"
+                android:text="@string/editor_crop" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -24,6 +24,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.load
 import org.lineageos.glimpse.models.Media
@@ -167,6 +168,9 @@ class ThumbnailAdapter : ListAdapter<AlbumViewModel.AlbumContent, RecyclerView.V
                         Thumbnail.MAX_THUMBNAIL_SIZE
                     )
                     .centerCrop()
+                    .signature(
+                        ObjectKey("${media.dateModified.time}-${media.sizeBytes}")
+                    )
             )
 
             videoOverlayImageView.isVisible = media.mediaType == MediaType.VIDEO
